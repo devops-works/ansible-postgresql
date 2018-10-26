@@ -2,7 +2,7 @@
 # Ansible managed
 # Backup all Postgresql db
 
-BACKUP_DIR=/var/backups/psql
+BACKUP_DIR={{ psql_backup_dir }}
 DAYS_TO_KEEP={{ psql_backup_days_keep }}
 FILE_SUFFIX=_pg_backup.sql
 USER=postgres
