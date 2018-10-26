@@ -1,0 +1,29 @@
+- name: Installs backup script
+  template:
+    src: "psql_backup_script.j2"
+    dest: /usr/local/bin/psql_dump_all_db.sh
+    mode: 0700
+    owner: postgres
+
+- name: Ensures logs destination exists
+  file:
+    path: /var/log/postgresql_backup.log
+    state: file
+    mode: 0600
+    owner: postgres
+
+- name: Ensures backup destination exists
+  file:
+    path: "{{ psql_backup_dir }}"
+    state: directory
+    mode: 0700
+    owner: postgres
+
+- name: Creates cron for psql backup
+  cron:
+    name: PostgreSQL backup
+    weekday: "*"
+    minute: "10"
+    hour: "*"
+    user: "postgres"
+    job: "/usr/local/bin/psql_dump_all_db.sh >> /var/log/postgresql_backup.log 2>&1"

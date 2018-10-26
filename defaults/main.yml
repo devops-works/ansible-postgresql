@@ -1,0 +1,3 @@
+psql_backup: true
+psql_backup_dir: /var/backups/psql
+psql_backup_days_keep: 7

@@ -1,0 +1,16 @@
+---
+galaxy_info:
+  author: Devops Works
+  description:
+  company: devops.works
+  license: MIT
+  min_ansible_version: 1.9
+
+  platforms:
+    - name: Ubuntu
+      versions:
+        - bionic
+  categories:
+    - database
+
+dependencies: []

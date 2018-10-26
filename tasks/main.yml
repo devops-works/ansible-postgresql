@@ -1,0 +1,11 @@
+- include: postgresql.yml
+  tags:
+    - postgresql
+    - psql
+
+- include: backup.yml
+  tags:
+    - postgresql
+    - psql
+    - backup
+  when: psql_backup

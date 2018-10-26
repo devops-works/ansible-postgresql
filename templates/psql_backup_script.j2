@@ -1,0 +1,23 @@
+#!/bin/bash
+# Ansible managed
+# Backup all Postgresql db
+
+BACKUP_DIR=/var/backups/psql
+DAYS_TO_KEEP={{ psql_backup_days_keep }}
+FILE_SUFFIX=_pg_backup.sql
+USER=postgres
+
+FILE=`date +"%Y%m%d%H%M"`${FILE_SUFFIX}
+
+OUTPUT_FILE=${BACKUP_DIR}/${FILE}
+
+pg_dumpall -U ${USER} -f ${OUTPUT_FILE}
+
+gzip $OUTPUT_FILE
+
+# log the result
+echo "${OUTPUT_FILE}.gz was created:"
+ls -l ${OUTPUT_FILE}.gz
+
+# prune old backups
+find $BACKUP_DIR -maxdepth 1 -mtime +$DAYS_TO_KEEP -name "*${FILE_SUFFIX}.gz" -exec rm -rf '{}' ';'
